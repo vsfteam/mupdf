@@ -902,6 +902,15 @@ fz_document_output_intent(fz_context *ctx, fz_document *doc)
 	return NULL;
 }
 
+void
+fz_document_purge(fz_context *ctx, fz_document *doc)
+{
+	if (doc && doc->purge)
+		doc->purge(ctx, doc);
+	fz_reap_dead_pages(ctx, doc);
+	fz_purge_glyph_cache(ctx);
+}
+
 static void
 fz_reap_dead_pages(fz_context *ctx, fz_document *doc)
 {

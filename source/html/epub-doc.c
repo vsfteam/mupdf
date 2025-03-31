@@ -990,6 +990,12 @@ epub_output_accelerator(fz_context *ctx, fz_document *doc_, fz_output *out)
 		fz_rethrow(ctx);
 }
 
+static void
+epub_purge(fz_context *ctx, fz_document *doc)
+{
+	fz_purge_stored_html(ctx, doc);
+}
+
 /* Takes ownership of zip. Will always eventually drop it.
  * Never takes ownership of accel. */
 static fz_document *
@@ -1018,6 +1024,7 @@ epub_init(fz_context *ctx, fz_archive *zip, fz_stream *accel)
 		doc->super.page_label = epub_page_label;
 		doc->super.lookup_metadata = epub_lookup_metadata;
 		doc->super.output_accelerator = epub_output_accelerator;
+		doc->super.purge = epub_purge;
 		doc->super.is_reflowable = 1;
 
 		doc->set = fz_new_html_font_set(ctx);

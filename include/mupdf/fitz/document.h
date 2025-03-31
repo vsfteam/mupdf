@@ -402,6 +402,11 @@ typedef int (fz_document_recognize_content_fn)(fz_context *ctx, const fz_documen
 */
 typedef void (fz_document_handler_fin_fn)(fz_context *ctx, const fz_document_handler *handler);
 
+/**
+	Purge document
+*/
+typedef void (fz_document_purge_fn)(fz_context *ctx, fz_document *doc);
+
 
 
 /**
@@ -969,6 +974,11 @@ void fz_set_metadata(fz_context *ctx, fz_document *doc, const char *key, const c
 fz_colorspace *fz_document_output_intent(fz_context *ctx, fz_document *doc);
 
 /**
+	Purge the document to save ram usage.
+*/
+void fz_document_purge(fz_context *ctx, fz_document *doc);
+
+/**
 	Get the separations details for a page.
 	This will be NULL, unless the format specifically supports
 	separations (such as PDF files). May be NULL even
@@ -1073,6 +1083,7 @@ struct fz_document
 	fz_document_output_accelerator_fn *output_accelerator;
 	fz_document_run_structure_fn *run_structure;
 	fz_document_as_pdf_fn *as_pdf;
+	fz_document_purge_fn *purge;
 	int did_layout;
 	int is_reflowable;
 
