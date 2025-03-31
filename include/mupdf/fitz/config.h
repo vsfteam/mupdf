@@ -288,4 +288,24 @@
 #define FZ_ENABLE_BARCODE 1
 #endif
 
+
+
+#ifdef __VSF__
+
+#ifdef __WIN__
+#undef _MSC_VER
+#undef _WIN32
+#define ARCH_HAS_SSE 0
+#endif
+
+#define HAVE_STDINT_H 1
+
+#define NOTO_SMALL
+#define NO_CJK
+#define TOFU
+
+#endif
+
+
+
 #endif /* FZ_CONFIG_H */
